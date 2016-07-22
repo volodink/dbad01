@@ -65,9 +65,31 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-      sudo apt-get update
-      sudo apt-get dist-upgrade -y
-      sudo apt-get upgrade -y
-      sudo apt-get install -y mc git htop build-essential  
+    # setup and update base system
+	sudo apt-get update
+    sudo apt-get dist-upgrade -y
+    sudo apt-get upgrade -y
+    sudo apt-get install -y mc git htop build-essential gcc g++ zlib1g zlib1g-dev 
+	sudo apt-get install -y libreadline5
+	sudo apt-get install -y libreadline5-dev
+	sudo apt-get install -y libreadline6
+	sudo apt-get install -y libreadline6-dev
+		
+	# add postgresql 
+	wget https://ftp.postgresql.org/pub/source/v9.5.3/postgresql-9.5.3.tar.gz
+
+    # compile it	
+	gunzip postgresql-9.5.3.tar.gz
+    tar xf postgresql-9.5.3.tar
+    cd postgresql-9.5.3
+	./configure --prefix=/usr/local/pgsql
+	make -j2 world
+	make checked
+	
+	# install it
+	sudo make install-world
+	
+	
+	
   SHELL
 end
