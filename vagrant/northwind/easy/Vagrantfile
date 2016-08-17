@@ -44,79 +44,19 @@ Vagrant.configure(2) do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
-      vb.memory = "512"
-	  vb.cpus = "3"
+    # Display the VirtualBox GUI when booting the machine
+    #   vb.gui = true
+    # Customize the amount of memory on the VM:
+    vb.memory = "512"
+	vb.cpus = "1"
   end
-  #
-  # View the documentation for the provider you are using for more
-  # information on available options.
-
-  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
-  # such as FTP and Heroku are also available. See the documentation at
-  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
-  # config.push.define "atlas" do |push|
-  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
-  # end
-
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
+  
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-  config.vm.provision "shell", privileged: false, inline: <<-SHELL
-    # setup and update base system
-	sudo apt-get update
-    sudo apt-get dist-upgrade -y
-    sudo apt-get upgrade -y
-    sudo apt-get install -y mc htop
-	sudo apt-get install -y build-essential gcc g++
-    sudo apt-get install -y git	
-	sudo apt-get install -y libpq-dev libreadline6-dev zlib1g zlib1g-dev
-	sudo apt-get install -y doxygen graphviz
-	
-	# add postgresql 
-	wget https://ftp.postgresql.org/pub/source/v9.5.3/postgresql-9.5.3.tar.gz
+  
+  config.vm.provision "shell", privileged: false, path: "../../../scripts/setup.sh"
+  
+  config.vm.provision "shell", privileged: false, path: "../../../scripts/postgresql.sh"
+  
+  config.vm.provision "shell", privileged: false, run: "always", path: "../../../scripts/postgresql_start.sh"
 
-    # extract archive content	
-    tar -xzvf postgresql-9.5.3.tar.gz
-	rm -f postgresql-9.5.3.tar.gz
-    
-	# compile postgresql
-	cd postgresql-9.5.3
-	./configure --prefix=/usr/local/pgsql
-	sleep 5
-	make -j4 world
-	sleep 5
-	make check
-	sleep 5
-	
-	# install it
-	sudo make install-world
-	
-	# add postgres user
-	echo "adding postgres user. password: postgres"
-	sudo useradd -p .7BkIrW3xJCN. -m -d /home/postgres postgres
-    	
-	echo "mkdir & chown"
-	sudo mkdir /usr/local/pgsql/data
-    sudo chown postgres /usr/local/pgsql/data
-	
-	# init base cluster and run server
-	sudo su -c "/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data" postgres
-    	
-    # copy config files
-	sudo cp /vagrant/conf/pg_hba.conf /usr/local/pgsql/data
-	sudo cp /vagrant/conf/postgresql.conf /usr/local/pgsql/data
-	
-  SHELL
-  
-  $script = <<-SCRIPT
-	sudo su -c "/usr/local/pgsql/bin/postgres -D /usr/local/pgsql/data >/tmp/logfile 2>&1 &" postgres
-  SCRIPT
-  
-  config.vm.provision "shell", run: "always", privileged: false, inline: $script
-  
 end
