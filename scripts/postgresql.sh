@@ -27,9 +27,14 @@ echo "mkdir & chown"
 sudo mkdir /usr/local/pgsql/data
 sudo chown postgres /usr/local/pgsql/data
 	
-# init base cluster and run server
+# init base cluster
 sudo su -c "/usr/local/pgsql/bin/initdb -D /usr/local/pgsql/data" postgres
     	
 # copy config files
 sudo cp /vagrant/conf/pg_hba.conf /usr/local/pgsql/data
 sudo cp /vagrant/conf/postgresql.conf /usr/local/pgsql/data
+
+# add paths
+sudo su -c "echo '#postgres paths' >> ~/.profile" postgres
+sudo su -c "echo 'export PATH=/usr/local/pgsql/bin:/usr/local/pgsql/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' >> ~/.profile" postgres
+sudo su -c "echo 'export PGDATA=/usr/local/pgsql/data' >> ~/.profile" postgres

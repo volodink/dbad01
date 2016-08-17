@@ -47,8 +47,8 @@ Vagrant.configure(2) do |config|
     # Display the VirtualBox GUI when booting the machine
     #   vb.gui = true
     # Customize the amount of memory on the VM:
-    vb.memory = "512"
-	vb.cpus = "1"
+    vb.memory = "2048"
+	vb.cpus = "4"
   end
   
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
@@ -58,5 +58,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", privileged: false, path: "../../../scripts/postgresql.sh"
   
   config.vm.provision "shell", privileged: false, run: "always", path: "../../../scripts/postgresql_start.sh"
+
+  config.vm.provision "shell", privileged: false, path: "../../../scripts/createdb_northwind.sh"
 
 end
