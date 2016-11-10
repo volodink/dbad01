@@ -1,22 +1,30 @@
-### Northwind Database Sample
+### Пример конфигурации БД Northwind (Northwind Database Sample)
 
-### How to use
+### Как использовать (How to use)
 
-1. Clone this repository
+1. Клонируйте этот репозиторий (Clone this repository)
 
-2. cd dbad01
+Для этого откройте терминал Linux и выполните команду:
 
-3. cd vagrant/northwind
+`git clone https://github.com/volodink/dbad01`
 
-4. vagrant up
+2. Перейдите в папку northwind
 
-.... WAIT ....
+`cd dbad01/vagrant/northwind`
 
-5. Use DataGrip (formerly 0xDBE) or other tool to connect to PostgreSQL server
+4. Запустите процесс развертывания 
 
-#TODO add server credentials
+`vagrant up`
 
-6. Try somethng like: select 42
+... Ждите (на i3 примерно 20-1000 минут, в зависимомти от интернета, памяти, положения админа) ...
 
-7. Got 42? You are awesome! =3
+5. Подключитесь к PostgreSQL (Use DataGrip (formerly 0xDBE) or other tool to connect to PostgreSQL server)
+
+![Alt text](relative/path/to/img.jpg?raw=true "Title")
+
+6. Введите и выполните запрос
+
+`select 42`
+
+7. Получили в ответ `42`? Вы великолепны! =3
 
