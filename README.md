@@ -1,6 +1,7 @@
 ### Database Administration and Development Course. Introduction (DBAD1)
 
-1. Для работы с утилитой `psql`:
+
+1 Для работы с утилитой `psql`:
 
 1.1 `vagrant ssh`
 
