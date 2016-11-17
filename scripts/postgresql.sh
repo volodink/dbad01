@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# определяем количество ядер для сборки
+cpucount=$(grep -c ^processor /proc/cpuinfo)
+cpucount=$(expr $cpucount + 1)
+echo "CPU Cores: "$cpucount
+sleep 5
+
 # качаем PostgreSQL
 wget https://ftp.postgresql.org/pub/source/v9.5.3/postgresql-9.5.3.tar.gz
 
@@ -11,7 +17,7 @@ rm -f postgresql-9.5.3.tar.gz
 cd postgresql-9.5.3
 ./configure --prefix=/usr/local/pgsql
 sleep 5
-make -j4 world
+make -j$(cpucount) world
 sleep 5
 make check
 sleep 5
