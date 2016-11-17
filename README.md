@@ -2,5 +2,5 @@
 
 1. Для работы с утилитой `psql`:
 
-`/usr/local/pgsql/bin/psql -d northwind`
+`/usr/local/pgsql/bin/psql -d northwind postgres`
 
