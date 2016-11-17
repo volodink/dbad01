@@ -2,5 +2,9 @@
 
 1. Для работы с утилитой `psql`:
 
-`/usr/local/pgsql/bin/psql -d northwind postgres`
+1.1 `vagrant ssh`
+
+1.2 `/usr/local/pgsql/bin/psql -d northwind postgres`
+
+1.3 Для выхода: `\q`
 
