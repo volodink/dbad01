@@ -9,3 +9,8 @@
 
 1.3 Для выхода: `\q`
 
+2 Для создания полного бекапа:
+ 
+ `/usr/local/pgsql/bin/pg_dump -U postgres northwind > n.sql`
+ 
+
